@@ -1,5 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Navigation from './components/Navigation';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
 import './App.css';
 
 interface AppProps {
@@ -13,26 +16,18 @@ function App(props: AppProps) {
   console.log('React App rendering with props:', props);
   
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>React Microfrontend</h1>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <p>
-          This is a React microfrontend running in single-spa!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router basename="/react">
+      <div className="App">
+        <Navigation />
+        <main className="app-main">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
 
