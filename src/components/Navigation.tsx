@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Navigation.css';
 
 const Navigation: React.FC = () => {
   const location = useLocation();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
     <nav className="react-navigation">
@@ -20,6 +21,37 @@ const Navigation: React.FC = () => {
             >
               🏠 Home
             </Link>
+          </li>
+          <li className="dropdown">
+            <button 
+              className={`dropdown-toggle ${location.pathname.includes('/react/page') ? 'active' : ''}`}
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              📄 Pages 
+              <span className={`dropdown-arrow ${isDropdownOpen ? 'open' : ''}`}>▼</span>
+            </button>
+            {isDropdownOpen && (
+              <ul className="dropdown-menu">
+                <li>
+                  <Link 
+                    to="/react/page1" 
+                    className={location.pathname === '/react/page1' ? 'active' : ''}
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    📄 Page 1
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/react/page2" 
+                    className={location.pathname === '/react/page2' ? 'active' : ''}
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    📋 Page 2
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
           <li>
             <Link 
